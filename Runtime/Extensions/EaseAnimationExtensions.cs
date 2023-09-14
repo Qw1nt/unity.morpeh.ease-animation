@@ -1,5 +1,8 @@
-﻿using Qw1nt.Morpeh.EaseAnimation.Runtime.Systems;
+﻿using JetBrains.Annotations;
+using Qw1nt.Morpeh.EaseAnimation.Runtime.Core;
+using Qw1nt.Morpeh.EaseAnimation.Runtime.Systems;
 using Scellecs.Morpeh;
+using UnityEngine;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions
 {

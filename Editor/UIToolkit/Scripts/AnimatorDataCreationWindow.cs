@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -8,6 +9,7 @@ using UnityEditor.Animations;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
 {
@@ -202,6 +204,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
             {
                 AnimationKey = root.Q<TextField>("AnimationKey");
                 TransitionDuration = root.Q<FloatField>("TransitionDurationField");
+                AnimationType = root.Q<EnumField>("AnimationType");
                 ClipName = root.Q<DropdownField>("AnimationClipsDropdown");
                 ClipReference = root.Q<ObjectField>("ReferenceClipField");
                 LayerIndex = root.Q<IntegerField>("LayerIndex");
@@ -213,6 +216,8 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
 
             public FloatField TransitionDuration { get; }
 
+            public EnumField AnimationType { get; }
+            
             public DropdownField ClipName { get; }
 
             public ObjectField ClipReference { get; }
@@ -231,12 +236,13 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
                     AnimationKey.value,
                     animationPriority,
                     TransitionDuration.value,
+                    Enum.Parse<AnimationType>(AnimationType.text),
                     clip,
                     GenerateLayerSettings()
                 );
             }
 
-            public LayerSettings GenerateLayerSettings()
+            private LayerSettings GenerateLayerSettings()
             {
                 return new LayerSettings(LayerIndex.value, LayerWeight.value);
             }

@@ -10,16 +10,18 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             Hash = animationHash;
             Priority = animation.Priority;
             TransitionDuration = animation.TransitionDuration;
-            ClipDuration = animation.AnimationClip.length;
+            ClipDuration = animation.AnimationClip == null ? 0f : animation.AnimationClip.length;
             LayerSettings = animation.LayerSettings;
+            Type = animation.Type;
         }
 
-        public HashedEcsAnimation(string name, int hash, int priority, float transitionDuration, float clipDuration, LayerSettings layerSettings)
+        public HashedEcsAnimation(string name, int hash, int priority, float transitionDuration, AnimationType type, float clipDuration, LayerSettings layerSettings)
         {
             Name = name;
             Hash = hash;
             Priority = priority;
             TransitionDuration = transitionDuration;
+            Type = type;
             ClipDuration = clipDuration;
             LayerSettings = layerSettings;
         }
@@ -32,6 +34,8 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 
         public float TransitionDuration { get; }
 
+        public AnimationType Type { get; }
+        
         public float ClipDuration { get; }
 
         public LayerSettings LayerSettings { get; }
@@ -52,12 +56,12 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 
         public static bool operator ==(HashedEcsAnimation left, HashedEcsAnimation right)
         {
-            return left?.Hash == right?.Hash;
+            return left?.Hash == right?.Hash && left?.Type == right?.Type;
         }
 
         public static bool operator !=(HashedEcsAnimation left, HashedEcsAnimation right)
         {
-            return left?.Hash != right?.Hash;
+            return left?.Hash != right?.Hash || left?.Type != right?.Type;
         }
 
         public static bool operator >(HashedEcsAnimation left, HashedEcsAnimation right)

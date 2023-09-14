@@ -29,7 +29,8 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 
         public EcsAnimator Get(Entity entity)
         {
-            return Data[entity.ID.GetHashCode()];
+            var key = entity.ID.GetHashCode();
+            return Data.ContainsKey(key) == false ? null : Data[key];
         }
 
         private void OnSceneChanged(Scene scene, Scene mode)

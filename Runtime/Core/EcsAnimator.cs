@@ -57,6 +57,30 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             return this;
         }
 
+        public EcsAnimator SetFloat(string parameterName, float value)
+        {
+            _unityAnimator.SetFloat(parameterName, value);
+            return this;
+        }    
+        
+        public EcsAnimator SetFloat(string parameterName, float value, float dampTime, float deltaTime)
+        {
+            _unityAnimator.SetFloat(parameterName, value, dampTime, deltaTime);
+            return this;
+        }
+
+        public EcsAnimator SetInteger(string parameter, int value)
+        {
+            _unityAnimator.SetInteger(parameter, value);
+            return this;
+        }
+
+        public EcsAnimator SetBool(string parameterName, bool value)
+        {
+            _unityAnimator.SetBool(parameterName, value);
+            return this;
+        }
+        
         internal bool NeedPlayAnimation()
         {
             if (_forcePlay == true)

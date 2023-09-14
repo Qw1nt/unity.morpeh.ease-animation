@@ -9,9 +9,20 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
         {
             foreach (var animation in animations)
             {
-                var hash = Animator.StringToHash(animation.AnimationClip.name);
-                Add(animation.Name, new HashedEcsAnimation(hash, animation));
+                Add(animation.Name, new HashedEcsAnimation(GetAnimationHash(animation), animation));
             }
+        }
+
+        private int GetAnimationHash(EcsAnimation animation)
+        {
+            if (animation.Type == AnimationType.BlendTree)
+                return Animator.StringToHash(animation.Name);
+
+            var animationName = animation.AnimationClip != null
+                ? animation.AnimationClip.name
+                : animation.Name;
+            
+            return Animator.StringToHash(animationName);
         }
     }
 }

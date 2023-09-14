@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/3rdParty/Qw1nt/unity.leoecslite.ease-animation/Editor/UIToolkit/Styles/CreateWinfowStyle.uss?fileID=7433441132597879392&amp;guid=4dad8c5a4e16f6d41aa21279ebb52473&amp;type=3#CreateWinfowStyle" />
+    <Style src="project://database/Assets/3rdParty/Qw1nt/unity.morpeh.ease-animation/Editor/UIToolkit/Styles/CreateWinfowStyle.uss?fileID=7433441132597879392&amp;guid=4dad8c5a4e16f6d41aa21279ebb52473&amp;type=3#CreateWinfowStyle" />
     <ui:VisualElement style="flex-grow: 1;">
         <ui:VisualElement style="flex-grow: 0; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">
             <ui:Label text="Create Animation" display-tooltip-when-elided="true" enable-rich-text="false" style="justify-content: flex-end; align-items: center; font-size: 20px; flex-wrap: nowrap; -unity-text-align: middle-center; -unity-font-style: bold; padding-bottom: 20px; padding-top: 10px; padding-right: 0; padding-left: 0; white-space: nowrap; flex-direction: row;">
@@ -7,7 +7,7 @@
             </ui:Label>
             <ui:VisualElement class="items-container">
                 <ui:TextField picking-mode="Ignore" label="Asset name:" password="false" name="AssetNameField" style="padding-bottom: 1px; padding-right: 5px; padding-left: 5px;" />
-                <ui:TextField picking-mode="Ignore" label="Save path:" password="false" name="SavePathField" style="padding-bottom: 1px; padding-right: 5px; padding-left: 5px;" />
+                <ui:TextField picking-mode="Ignore" label="Save path:" password="false" name="SavePathField" tooltip="Без папки &quot;Assets&quot;" style="padding-bottom: 1px; padding-right: 5px; padding-left: 5px;" />
             </ui:VisualElement>
             <ui:VisualElement style="border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; background-color: rgb(55, 55, 55); margin-top: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">
                 <uie:ObjectField label="Source animator:" type="UnityEditor.Animations.AnimatorController, UnityEditor" binding-path="animatorController" name="SourceAnimatorField" style="padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; margin-top: 5px; margin-left: 0; margin-right: 0; margin-bottom: 5px;" />
@@ -16,13 +16,14 @@
                         <ui:VisualElement name="MainContainer" class="items-container">
                             <ui:Label text="Main" display-tooltip-when-elided="true" style="margin-top: 0; border-bottom-width: 0; border-bottom-color: rgb(52, 52, 52); height: 18px; font-size: 13px; margin-bottom: 0; margin-left: 0; border-left-width: 0; border-right-width: 0; border-top-width: 0; margin-right: 0;" />
                             <ui:VisualElement name="MainContainer" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; background-color: rgb(70, 70, 70); border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-width: 0; border-right-width: 0; border-left-width: 0; border-left-color: rgb(52, 52, 52); border-right-color: rgb(52, 52, 52); border-top-color: rgb(52, 52, 52); border-bottom-color: rgb(52, 52, 52); border-top-width: 0;">
-                                <ui:TextField picking-mode="Ignore" label="Animation key:" value="filler text" name="AnimationKey" style="padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                                <ui:TextField picking-mode="Ignore" label="Animation key:" name="AnimationKey" style="padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
                                 <uie:FloatField label="Transition duration:" value="0" name="TransitionDurationField" style="margin-top: 5px; margin-left: 0; margin-right: 0; margin-bottom: 0;" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="AnimationClipContainer" class="items-container">
                             <ui:Label text="Animation clip&#10;" display-tooltip-when-elided="true" style="margin-top: 0; height: 18px; font-size: 13px; margin-left: 0; margin-right: 0; margin-bottom: 0;" />
                             <ui:VisualElement name="AnimationClipContainer" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; background-color: rgb(70, 70, 70); border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                                <ui:EnumField label="Animation Type" type="Qw1nt.Morpeh.EaseAnimation.Runtime.Core.AnimationType, EaseAnimation" value="Clip" name="AnimationType" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 5px;" />
                                 <ui:DropdownField label="Name" index="-1" name="AnimationClipsDropdown" style="margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0;" />
                                 <uie:ObjectField label="Reference:" type="UnityEngine.AnimationClip, UnityEngine.AnimationModule" focusable="false" name="ReferenceClipField" allow-scene-objects="false" style="padding-bottom: 0; display: flex; visibility: visible; overflow: hidden; margin-left: 0; margin-right: 0; margin-top: 5px; margin-bottom: 0;" />
                             </ui:VisualElement>
@@ -30,7 +31,7 @@
                         <ui:VisualElement name="LayerSettingsContainer" class="items-container">
                             <ui:Label text="Layer&#10;" display-tooltip-when-elided="true" style="height: 18px; font-size: 13px;" />
                             <ui:VisualElement style="border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; background-color: rgb(70, 70, 70); padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">
-                                <uie:IntegerField label="Index" value="1" name="LayerIndex" style="margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0;" />
+                                <uie:IntegerField label="Index" value="0" name="LayerIndex" style="margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0;" />
                                 <ui:Slider picking-mode="Ignore" label="Weight" value="1" high-value="1" name="LayerWeight" show-input-field="true" style="margin-left: 0; margin-right: 0; margin-top: 5px; margin-bottom: 0;" />
                             </ui:VisualElement>
                         </ui:VisualElement>

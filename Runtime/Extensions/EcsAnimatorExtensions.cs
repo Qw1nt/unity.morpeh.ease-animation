@@ -1,4 +1,7 @@
-﻿using Qw1nt.Morpeh.EaseAnimation.Runtime.Core;
+﻿using JetBrains.Annotations;
+using Qw1nt.Morpeh.EaseAnimation.Runtime.Core;
+using Scellecs.Morpeh;
+using UnityEngine;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions
 {
@@ -8,6 +11,55 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions
         {
             var animation = animator.GetAnimation(animator.Data.InitialAnimationName);
             animator.AnimationBuffer.SetInitial(animation);
-        } 
+        }
+
+        [CanBeNull]
+        public static EcsAnimator GetAnimator(this Entity entity)
+        {
+            return EcsAnimatorContainer.Instance.Get(entity);
+        }
+
+        [CanBeNull]
+        public static EcsAnimator SetSafeFloat([CanBeNull] this EcsAnimator animator, string parameterName, float value)
+        {
+            return animator?.SetFloat(parameterName, value);
+        }
+
+        [CanBeNull]
+        public static EcsAnimator SetSafeFloat([CanBeNull] this EcsAnimator animator, string parameterName, float value,
+            float dampTime,
+            float deltaTime)
+        {
+            return animator?.SetFloat(parameterName, value, dampTime, deltaTime);
+        }
+
+        [CanBeNull]
+        public static EcsAnimator SetSafeXY([CanBeNull] this EcsAnimator animator, string xParameterName,
+            string yParameterName, Vector2 value, float dampTime, float deltaTime)
+        {
+            animator?.SetFloat(xParameterName, value.x, dampTime, deltaTime);
+            animator?.SetFloat(yParameterName, value.y, dampTime, deltaTime);
+            return animator;
+        }
+
+        public static EcsAnimator SetSafeXZ(this EcsAnimator animator, string xParameterName, string zParameterName,
+            Vector3 value, float dampTime, float deltaTime)
+        {
+            animator?.SetFloat(xParameterName, value.x, dampTime, deltaTime);
+            animator?.SetFloat(zParameterName, value.z, dampTime, deltaTime);
+            return animator;
+        }
+
+        [CanBeNull]
+        public static EcsAnimator SetSafeInteger([CanBeNull] this EcsAnimator animator, string parameterName, int value)
+        {
+            return animator?.SetInteger(parameterName, value);
+        }
+
+        [CanBeNull]
+        public static EcsAnimator SetSafeBool([CanBeNull] this EcsAnimator animator, string parameterName, bool value)
+        {
+            return animator?.SetBool(parameterName, value);
+        }
     }
 }
