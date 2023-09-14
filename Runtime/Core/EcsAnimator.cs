@@ -104,8 +104,6 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 
         private void ApplyLayerSettings(HashedEcsAnimation animation)
         {
-            Debug.Log($"Playeback: {PlayableAnimation?.LayerSettings.Index}, Current: {animation.LayerSettings.Index}");
-            
             if (PlayableAnimation?.LayerSettings.Index != animation.LayerSettings.Index)
                 PlayableAnimation?.LayerSettings.Reset(_unityAnimator);
             

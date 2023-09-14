@@ -7,6 +7,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
     internal class InitEcsAnimatorSystem : ISystem
     {
         private Filter _filter;
+        private Stash<InitEcsAnimatorRequest> _requestStash;
 
         public World World { get; set; }
 
@@ -16,17 +17,19 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
                 .With<InitEcsAnimatorRequest>()
                 .With<EcsAnimatorHandler>()
                 .Build();
+            _requestStash = World.GetStash<InitEcsAnimatorRequest>();
         }
         
         public void OnUpdate(float deltaTime)
         {
             foreach (var entity in _filter)
             {
-                ref var request = ref entity.GetComponent<InitEcsAnimatorRequest>();
+                ref var request = ref _requestStash.Get(entity);
                 ref var animator = ref entity.GetComponent<EcsAnimatorHandler>();
                 animator.Source = new EcsAnimator(request.UnityAnimator, request.EcsAnimatorData);
                 
                 EcsAnimatorContainer.Instance.Register(entity, animator.Source);
+                _requestStash.Remove(entity);
             }
         }
         
