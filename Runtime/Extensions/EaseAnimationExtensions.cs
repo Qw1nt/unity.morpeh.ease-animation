@@ -9,7 +9,6 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions
         {
             var group = world.CreateSystemsGroup();
             group.AddSystem(new InitEcsAnimatorSystem());
-            // group.AddSystem(new DelInitRequestSystem());
             group.AddSystem(new SetInitialAnimationSystem());
             group.AddSystem(new EcsAnimationSystem());
             world.AddSystemsGroup(order, group);

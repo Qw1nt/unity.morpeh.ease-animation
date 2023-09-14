@@ -2,7 +2,7 @@
 using Scellecs.Morpeh.Providers;
 using Unity.IL2CPP.CompilerServices;
 
-namespace Qw1nt._3rdParty.Qw1nt.unity.morpeh.ease_animation.Runtime.Providers
+namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Providers
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]

@@ -1,4 +1,5 @@
-﻿using Scellecs.Morpeh;
+﻿using Qw1nt.Morpeh.EaseAnimation.Runtime.Components;
+using Scellecs.Morpeh;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
 {
@@ -11,7 +12,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
         public void OnAwake()
         {
             _filter = World.Filter
-                .With<Components.EcsAnimatorHandler>()
+                .With<EcsAnimatorHandler>()
                 .Build();
         }
 
@@ -19,7 +20,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
         {
             foreach (var entity in _filter)
             {
-                ref var component = ref entity.GetComponent<Components.EcsAnimatorHandler>();
+                ref var component = ref entity.GetComponent<EcsAnimatorHandler>();
                 var ecsAnimator = component.Source;
 
                 if (ecsAnimator.NeedPlayAnimation() == false)

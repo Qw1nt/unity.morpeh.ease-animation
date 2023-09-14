@@ -25,7 +25,6 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 
         public IEcsAnimationBuffer AnimationBuffer => EcsAnimationBuffer;
 
-        private float _animationTimerDuration;
         private bool _forcePlay;
 
         private void Init()
@@ -52,24 +51,10 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             if (filledAnimation?.Priority > EcsAnimationBuffer.PlayableAnimation?.Priority)
                 EcsAnimationBuffer.Fill(filledAnimation);
 
-            if (_animationTimerDuration <= 0f && filledAnimation > EcsAnimationBuffer.PlayableAnimation)
+            if (filledAnimation > EcsAnimationBuffer.PlayableAnimation)
                 EcsAnimationBuffer?.Fill(filledAnimation);
 
             return this;
-        }
-
-        public void SetTimer(float duration)
-        {
-            _animationTimerDuration = duration;
-            _forcePlay = true;
-        }
-
-        internal void ProcessTimer(float deltaTime)
-        {
-            _animationTimerDuration -= deltaTime;
-
-            if (_animationTimerDuration <= 0f)
-                _animationTimerDuration = 0f;
         }
 
         internal bool NeedPlayAnimation()
@@ -79,9 +64,6 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
                 _forcePlay = false;
                 return true;
             }
-
-            if (_animationTimerDuration > 0f)
-                return false;
 
             if (PlayableAnimation != EcsAnimationBuffer.PlayableAnimation)
                 return true;
@@ -106,7 +88,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
         {
             if (PlayableAnimation?.LayerSettings.Index != animation.LayerSettings.Index)
                 PlayableAnimation?.LayerSettings.Reset(_unityAnimator);
-            
+
             _unityAnimator.SetLayerWeight(animation.LayerSettings.Index, animation.LayerSettings.Weight);
         }
     }

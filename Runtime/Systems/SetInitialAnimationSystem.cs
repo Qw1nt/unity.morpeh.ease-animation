@@ -13,7 +13,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
         public void OnAwake()
         {
             _filter = World.Filter
-                .With<Components.EcsAnimatorHandler>()
+                .With<EcsAnimatorHandler>()
                 .Build();
         }
 

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 {
