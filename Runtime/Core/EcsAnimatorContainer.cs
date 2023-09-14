@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Scellecs.Morpeh;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
@@ -23,19 +22,18 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             Data.Add(entity.ID.GetHashCode(), animator);
         }
 
-        public EcsAnimator SetAnimation(int entity, string animationName)
+        public EcsAnimator SetAnimation(Entity entity, string animationName)
         {
             return Get(entity).SetAnimation(animationName);
         }
-        
-        public EcsAnimator Get(int entity)
+
+        public EcsAnimator Get(Entity entity)
         {
-            return Data[entity];
+            return Data[entity.ID.GetHashCode()];
         }
 
         private void OnSceneChanged(Scene scene, Scene mode)
         {
-                Debug.Log($"From {scene.buildIndex} to {mode.name}");
             Data.Clear();
         }
     }
