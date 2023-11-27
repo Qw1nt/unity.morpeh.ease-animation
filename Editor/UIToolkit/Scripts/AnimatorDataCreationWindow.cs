@@ -6,7 +6,7 @@ using System.Linq;
 using Qw1nt.Morpeh.EaseAnimation.Runtime.Core;
 using UnityEditor;
 using UnityEditor.Animations;
-using UnityEditor.UIElements;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;

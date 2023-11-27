@@ -11,6 +11,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
         [Space] [SerializeField] private string _initialAnimationName;
         [SerializeField] private List<EcsAnimation> _animations;
 
+#if UNITY_EDITOR
         private void OnValidate()
         {
             var serializedObject = new SerializedObject(this);
@@ -19,8 +20,8 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             {
                 var animation = animations.GetArrayElementAtIndex(i);
                 var nameProperty = animation.FindPropertyRelative("_name");
-                
-                if(string.IsNullOrEmpty(nameProperty.stringValue) == false)
+
+                if (string.IsNullOrEmpty(nameProperty.stringValue) == false)
                     continue;
 
                 // var clip = (AnimationClip) animation.FindPropertyRelative("_animationClip").objectReferenceValue;
@@ -29,6 +30,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 
             serializedObject.ApplyModifiedProperties();
         }
+#endif
 
         public RuntimeAnimatorController AnimatorController => _animatorController;
 
