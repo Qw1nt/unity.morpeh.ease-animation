@@ -21,8 +21,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
         {
             foreach (var entity in _filter)
             {
-                ref var component = ref entity.GetComponent<EcsAnimatorHandler>();
-                component.Source.SetInitialAnimation();
+                entity.GetAnimator().SetInitialAnimation();
             }
         }
 

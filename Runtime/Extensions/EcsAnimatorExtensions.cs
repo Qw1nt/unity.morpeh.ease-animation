@@ -1,4 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
+using Qw1nt._3rdParty.Qw1nt.unity.morpeh.ease_animation.Runtime.Plugins;
+using Qw1nt.Morpeh.EaseAnimation.Runtime.Components;
 using Qw1nt.Morpeh.EaseAnimation.Runtime.Core;
 using Scellecs.Morpeh;
 using UnityEngine;
@@ -13,10 +16,22 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions
             animator.AnimationBuffer.SetInitial(animation);
         }
 
-        [CanBeNull]
+        public static void SetAnimation(this Entity entity, string key)
+        {
+            var animator = entity.GetAnimator();
+            animator.SetAnimation(key);
+        }
+
         public static EcsAnimator GetAnimator(this Entity entity)
         {
-            return EcsAnimatorContainer.Instance.Get(entity);
+            var stash = HandlerStorage.Instance.Stash;
+            
+            if (stash.Has(entity) == false)
+                throw new ArgumentException($"{entity} does not contains {nameof(EcsAnimatorHandler)}");
+
+            ref var handler = ref stash.Get(entity);
+            handler.Source ??= new EcsAnimator(handler.Animator, handler.Data);
+            return handler.Source;
         }
 
         [CanBeNull]

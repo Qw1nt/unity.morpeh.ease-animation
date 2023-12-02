@@ -1,4 +1,5 @@
 ﻿using Qw1nt.Morpeh.EaseAnimation.Runtime.Components;
+using Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions;
 using Scellecs.Morpeh;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
@@ -20,8 +21,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
         {
             foreach (var entity in _filter)
             {
-                ref var component = ref entity.GetComponent<EcsAnimatorHandler>();
-                var ecsAnimator = component.Source;
+                var ecsAnimator = entity.GetAnimator();
 
                 if (ecsAnimator.NeedPlayAnimation() == false)
                 {

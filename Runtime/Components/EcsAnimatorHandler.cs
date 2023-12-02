@@ -2,6 +2,7 @@
 using Qw1nt.Morpeh.EaseAnimation.Runtime.Core;
 using Scellecs.Morpeh;
 using Unity.IL2CPP.CompilerServices;
+using UnityEngine;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Components
 {
@@ -11,6 +12,8 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Components
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
     public struct EcsAnimatorHandler : IComponent
     {
-        public EcsAnimator Source;
+        public Animator Animator;
+        public EcsAnimatorData Data;
+        internal EcsAnimator Source;
     }
 }

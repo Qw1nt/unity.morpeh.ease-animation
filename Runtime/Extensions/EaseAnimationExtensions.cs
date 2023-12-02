@@ -1,8 +1,5 @@
-﻿using JetBrains.Annotations;
-using Qw1nt.Morpeh.EaseAnimation.Runtime.Core;
-using Qw1nt.Morpeh.EaseAnimation.Runtime.Systems;
+﻿using Qw1nt.Morpeh.EaseAnimation.Runtime.Systems;
 using Scellecs.Morpeh;
-using UnityEngine;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions
 {
@@ -11,10 +8,15 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions
         public static void AddAnimationSystem(this World world, int order)
         {
             var group = world.CreateSystemsGroup();
-            group.AddSystem(new InitEcsAnimatorSystem());
             group.AddSystem(new SetInitialAnimationSystem());
             group.AddSystem(new EcsAnimationSystem());
             world.AddSystemsGroup(order, group);
+        }
+
+        public static void AddAnimationSystem(this SystemsGroup group)
+        {
+            group.AddSystem(new SetInitialAnimationSystem());
+            group.AddSystem(new EcsAnimationSystem());
         }
     }
 }

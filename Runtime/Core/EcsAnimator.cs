@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using UnityEngine;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
@@ -8,14 +9,15 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
         private readonly Animator _unityAnimator;
         private readonly EcsAnimatorData _animatorData;
 
-        public EcsAnimator(Animator unityAnimator, EcsAnimatorData animatorData)
+        private AnimationHashMap _animationHashMap;
+
+        internal EcsAnimator(Animator unityAnimator, EcsAnimatorData animatorData)
         {
             _unityAnimator = unityAnimator;
             _animatorData = animatorData;
+
             Init();
         }
-
-        private AnimationHashMap _animationHashMap;
 
         public EcsAnimatorData Data => _animatorData;
 
@@ -44,7 +46,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             return _animationHashMap[animationName];
         }
 
-        public EcsAnimator SetAnimation(string animationName)
+        internal EcsAnimator SetAnimation(string animationName)
         {
             var filledAnimation = _animationHashMap[animationName];
 
@@ -57,25 +59,25 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             return this;
         }
 
-        public EcsAnimator SetFloat(string parameterName, float value)
+        internal EcsAnimator SetFloat(string parameterName, float value)
         {
             _unityAnimator.SetFloat(parameterName, value);
             return this;
         }    
         
-        public EcsAnimator SetFloat(string parameterName, float value, float dampTime, float deltaTime)
+        internal EcsAnimator SetFloat(string parameterName, float value, float dampTime, float deltaTime)
         {
             _unityAnimator.SetFloat(parameterName, value, dampTime, deltaTime);
             return this;
         }
 
-        public EcsAnimator SetInteger(string parameter, int value)
+        internal EcsAnimator SetInteger(string parameter, int value)
         {
             _unityAnimator.SetInteger(parameter, value);
             return this;
         }
 
-        public EcsAnimator SetBool(string parameterName, bool value)
+        internal EcsAnimator SetBool(string parameterName, bool value)
         {
             _unityAnimator.SetBool(parameterName, value);
             return this;

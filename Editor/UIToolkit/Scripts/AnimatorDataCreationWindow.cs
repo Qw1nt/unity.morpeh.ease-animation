@@ -6,7 +6,7 @@ using System.Linq;
 using Qw1nt.Morpeh.EaseAnimation.Runtime.Core;
 using UnityEditor;
 using UnityEditor.Animations;
-using UnityEditor.Search;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
@@ -72,7 +72,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
                 _elements.CreateAnimationParent.SetEnabled(false);
                 return;
             }
-
+            
             var clips = new List<string>(animator.animationClips.Length);
             clips.AddRange(animator.animationClips.Select(clip => clip.name));
             _createElements.ClipName.choices = clips;
@@ -116,7 +116,8 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
             };
 
             element.Q<Label>("AnimationKey").text = ecsAnimation.Name;
-            element.Q<Label>("TransitionDuration").text = ecsAnimation.TransitionDuration.ToString(CultureInfo.InvariantCulture);
+            element.Q<Label>("TransitionDuration").text =
+                ecsAnimation.TransitionDuration.ToString(CultureInfo.InvariantCulture);
             element.Q<Label>("ClipName").text = ecsAnimation.AnimationClip.name;
             element.Q<Button>("DeleteAnimationButton").clicked += () =>
             {
@@ -217,7 +218,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
             public FloatField TransitionDuration { get; }
 
             public EnumField AnimationType { get; }
-            
+
             public DropdownField ClipName { get; }
 
             public ObjectField ClipReference { get; }
