@@ -42,7 +42,6 @@ namespace Qw1nt._3rdParty.Qw1nt.unity.morpeh.ease_animation.Runtime.Plugins
         public void Initialize(World world)
         {
             Stash = world.GetStash<EcsAnimatorHandler>();
-            Debug.Log(Stash);
         }
 
         public void Deinitialize(World world)

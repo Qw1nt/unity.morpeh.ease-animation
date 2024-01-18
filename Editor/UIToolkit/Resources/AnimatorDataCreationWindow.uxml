@@ -6,8 +6,9 @@
                 <ui:Button display-tooltip-when-elided="true" tooltip="Refresh animator clips" style="width: 24px; height: 24px; flex-direction: column; -unity-text-align: middle-center; align-items: stretch; flex-grow: 0; flex-shrink: 0; background-image: url(&apos;project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/d_refresh@2x.png?fileID=2800000&amp;guid=602b72d4617c3694aa94419fc1b68e04&amp;type=3#d_refresh@2x&apos;); -unity-font-style: normal; white-space: nowrap;" />
             </ui:Label>
             <ui:VisualElement class="items-container">
-                <ui:TextField picking-mode="Ignore" label="Asset name:" password="false" name="AssetNameField" style="padding-bottom: 1px; padding-right: 5px; padding-left: 5px;" />
-                <ui:TextField picking-mode="Ignore" label="Save path:" password="false" name="SavePathField" tooltip="Без папки &quot;Assets&quot;" style="padding-bottom: 1px; padding-right: 5px; padding-left: 5px;" />
+                <ui:TextField picking-mode="Ignore" label="Save path:" password="false" name="SavePathField" tooltip="Без папки &quot;Assets&quot;" readonly="true" is-delayed="false" style="padding-bottom: 1px; padding-right: 5px; padding-left: 5px;">
+                    <ui:Button text="Browse" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BrowseSavePathButton" />
+                </ui:TextField>
             </ui:VisualElement>
             <ui:VisualElement style="border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; background-color: rgb(55, 55, 55); margin-top: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">
                 <uie:ObjectField label="Source animator:" type="UnityEditor.Animations.AnimatorController, UnityEditor" binding-path="animatorController" name="SourceAnimatorField" style="padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; margin-top: 5px; margin-left: 0; margin-right: 0; margin-bottom: 5px;" />

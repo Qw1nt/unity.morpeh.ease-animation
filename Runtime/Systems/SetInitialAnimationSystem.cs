@@ -21,7 +21,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
         {
             foreach (var entity in _filter)
             {
-                entity.GetAnimator().SetInitialAnimation();
+                entity.Animator().SetInitialAnimation();
             }
         }
 

@@ -23,7 +23,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
         private VisualTreeAsset _tree;
         private VisualTreeAsset _animationPreview;
         private Elements _elements;
-        private CreateAnimationElements _createElements;
+        private CreateAnimationElements _elementsInCratePart;
 
         [MenuItem("Window/Ecs Animation System/Create Animator Data")]
         public static void Open()
@@ -43,14 +43,25 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
 
             _tree.CloneTree(rootVisualElement);
             _elements = new Elements(rootVisualElement);
-            _createElements = new CreateAnimationElements(rootVisualElement);
+            _elementsInCratePart = new CreateAnimationElements(rootVisualElement);
 
-            _createElements.AddAnimationButton.clicked += AddAnimation;
+            _elements.BrowseSavePathButton.clicked += () =>
+            {
+                var path = EditorUtility.SaveFilePanelInProject("Save animator data", "EcsAnimatorData", "asset", "");
+
+                if (string.IsNullOrEmpty(path) == true)
+                    return;
+
+                _elements.SavePath.value = path;
+                _elements.SavePath.tooltip = path;
+            };
+
+            _elementsInCratePart.AddAnimationButton.clicked += AddAnimation;
             _elements.CreateAnimationParent.SetEnabled(false);
 
             _elements.SourceAnimator.RegisterValueChangedCallback(InitAnimator);
-            _createElements.ClipReference.SetEnabled(false);
-            _createElements.ClipName.RegisterValueChangedCallback(callback =>
+            _elementsInCratePart.ClipReference.SetEnabled(false);
+            _elementsInCratePart.ClipName.RegisterValueChangedCallback(callback =>
             {
                 var animatorController = (AnimatorController) _elements.SourceAnimator.value;
                 var animation = animatorController.animationClips
@@ -59,7 +70,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
                 if (animation is null)
                     return;
 
-                _createElements.ClipReference.value = animation;
+                _elementsInCratePart.ClipReference.value = animation;
             });
 
             _elements.SaveAssetButton.clicked += Create;
@@ -72,29 +83,29 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
                 _elements.CreateAnimationParent.SetEnabled(false);
                 return;
             }
-            
+
             var clips = new List<string>(animator.animationClips.Length);
             clips.AddRange(animator.animationClips.Select(clip => clip.name));
-            _createElements.ClipName.choices = clips;
+            _elementsInCratePart.ClipName.choices = clips;
             _elements.InitialAnimationDropdown.choices = new List<string>();
             _elements.CreateAnimationParent.SetEnabled(true);
         }
 
         private void AddAnimation()
         {
-            if (StringIsEmpty(_createElements.AnimationKey.value, "Animation key field is empty") == true)
+            if (StringIsEmpty(_elementsInCratePart.AnimationKey.value, "Animation key field is empty") == true)
                 return;
 
-            if (StringIsEmpty(_createElements.ClipName.value, "Clip name is not select") == true)
+            if (StringIsEmpty(_elementsInCratePart.ClipName.value, "Clip name is not select") == true)
                 return;
 
             VisualElement element = _animationPreview.CloneTree();
             var ecsAnimation = SetupAddedAnimation(element);
 
-            _createElements.AnimationKey.value = "";
-            _createElements.ClipName.index = 1;
-            _createElements.ClipReference.value = null;
-            _createElements.ClipName.choices.Remove(ecsAnimation.AnimationClip.name);
+            _elementsInCratePart.AnimationKey.value = "";
+            _elementsInCratePart.ClipName.index = 1;
+            _elementsInCratePart.ClipReference.value = null;
+            _elementsInCratePart.ClipName.choices.Remove(ecsAnimation.AnimationClip.name);
             _elements.InitialAnimationDropdown.choices.Add(ecsAnimation.Name);
 
             _animations.Add(ecsAnimation);
@@ -103,13 +114,13 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
 
         private EcsAnimation SetupAddedAnimation(VisualElement element)
         {
-            var clip = (AnimationClip) _createElements.ClipReference.value;
+            var clip = (AnimationClip) _elementsInCratePart.ClipReference.value;
 
             var animationClipField = element.Q<ObjectField>("AnimationClip");
             animationClipField.value = clip;
             animationClipField.SetEnabled(false);
 
-            var ecsAnimation = _createElements.BuildEcsAnimation(_animations.Count + 1);
+            var ecsAnimation = _elementsInCratePart.BuildEcsAnimation(_animations.Count + 1);
             element.Q<Button>("SelectAnimationClipButton").clicked += () =>
             {
                 Selection.SetActiveObjectWithContext(animationClipField.value, null);
@@ -123,7 +134,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
             {
                 _animations.Remove(ecsAnimation);
                 _elements.ScrollView.Remove(element);
-                _createElements.ClipName.choices.Add(ecsAnimation.AnimationClip.name);
+                _elementsInCratePart.ClipName.choices.Add(ecsAnimation.AnimationClip.name);
                 _elements.InitialAnimationDropdown.choices.Remove(ecsAnimation.Name);
             };
 
@@ -133,6 +144,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
         private void Create()
         {
             var assetPath = CreateEmptyAsset();
+            
             if (string.IsNullOrEmpty(assetPath) == true)
                 return;
 
@@ -141,24 +153,13 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
 
         private string CreateEmptyAsset()
         {
-            string sourcePath = _elements.SavePath.value;
-            string assetName = _elements.AssetName.value;
+            string savePath = _elements.SavePath.value;
 
-            if (StringIsEmpty(assetName, "Asset name is empty") == true)
+            if (StringIsEmpty(savePath, "Asset name is empty") == true)
                 return null;
 
-            string savePath = Path.Combine("Assets", sourcePath);
-            string assetPath = Path.Combine(savePath, assetName);
-            assetPath = Path.ChangeExtension(assetPath, "asset");
-
-            if (Directory.Exists(savePath) == false)
-            {
-                EditorUtility.DisplayDialog("Error", savePath, "Ok");
-                return null;
-            }
-
-            AssetDatabase.CreateAsset(CreateInstance<EcsAnimatorData>(), assetPath);
-            return assetPath;
+            AssetDatabase.CreateAsset(CreateInstance<EcsAnimatorData>(), savePath);
+            return savePath;
         }
 
         private void SetupAsset(string assetPath)
@@ -185,7 +186,6 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
 
             AssetDatabase.SaveAssets();
 
-            _elements.AssetName.value = "";
             _elements.SavePath.value = "";
             _elements.ScrollView.Clear();
         }
@@ -254,7 +254,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
             public Elements(VisualElement root)
             {
                 SavePath = root.Q<TextField>("SavePathField");
-                AssetName = root.Q<TextField>("AssetNameField");
+                BrowseSavePathButton = root.Q<Button>("BrowseSavePathButton");
                 SourceAnimator = root.Q<ObjectField>("SourceAnimatorField");
                 CreateAnimationParent = root.Q<VisualElement>("CreateAnimationFields");
                 InitialAnimationDropdown = root.Q<DropdownField>("InitialAnimationDropdown");
@@ -264,7 +264,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Editor.UIToolkit.CreationWindow
 
             public TextField SavePath { get; }
 
-            public TextField AssetName { get; }
+            public Button BrowseSavePathButton { get; }
 
             public ObjectField SourceAnimator { get; }
 

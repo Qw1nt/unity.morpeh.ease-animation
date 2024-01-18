@@ -21,7 +21,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
         {
             foreach (var entity in _filter)
             {
-                var ecsAnimator = entity.GetAnimator();
+                var ecsAnimator = entity.Animator();
 
                 if (ecsAnimator.NeedPlayAnimation() == false)
                 {

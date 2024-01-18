@@ -18,11 +18,11 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions
 
         public static void SetAnimation(this Entity entity, string key)
         {
-            var animator = entity.GetAnimator();
+            var animator = entity.Animator();
             animator.SetAnimation(key);
         }
 
-        public static EcsAnimator GetAnimator(this Entity entity)
+        public static EcsAnimator Animator(this Entity entity)
         {
             var stash = HandlerStorage.Instance.Stash;
             
