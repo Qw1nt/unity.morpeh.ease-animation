@@ -1,9 +1,13 @@
 ﻿using System;
+using Unity.IL2CPP.CompilerServices;
 using UnityEngine;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 {
     [Serializable]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
     public struct LayerSettings
     {
         [SerializeField] private int _index;
@@ -27,6 +31,16 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
         public void Reset(Animator animator)
         {
             animator.SetLayerWeight(_index, 0f);
+        }
+
+        public static bool operator ==(LayerSettings left, LayerSettings right)
+        {
+            return left._index == right._index && left._weight == right._weight;
+        }
+
+        public static bool operator !=(LayerSettings left, LayerSettings right)
+        {
+            return !(left == right);
         }
 
         public static LayerSettings Null => new LayerSettings(-1, -1f);

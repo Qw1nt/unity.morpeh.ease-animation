@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Threading;
+using Unity.IL2CPP.CompilerServices;
 using UnityEngine;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 {
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
     public class EcsAnimator
     {
         private readonly Animator _unityAnimator;
@@ -18,6 +22,9 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 
             Init();
         }
+
+        // TODO убрать | добавить изменение весов слоёв 
+        public Animator UnityAnimator => _unityAnimator;
 
         public EcsAnimatorData Data => _animatorData;
 
@@ -50,9 +57,6 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
         {
             var filledAnimation = _animationHashMap[animationName];
 
-            if (filledAnimation?.Priority > EcsAnimationBuffer.PlayableAnimation?.Priority)
-                EcsAnimationBuffer.Fill(filledAnimation);
-
             if (filledAnimation > EcsAnimationBuffer.PlayableAnimation)
                 EcsAnimationBuffer?.Fill(filledAnimation);
 
@@ -63,8 +67,8 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
         {
             _unityAnimator.SetFloat(parameterName, value);
             return this;
-        }    
-        
+        }
+
         internal EcsAnimator SetFloat(string parameterName, float value, float dampTime, float deltaTime)
         {
             _unityAnimator.SetFloat(parameterName, value, dampTime, deltaTime);
@@ -82,7 +86,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             _unityAnimator.SetBool(parameterName, value);
             return this;
         }
-        
+
         internal bool NeedPlayAnimation()
         {
             if (_forcePlay == true)
@@ -94,17 +98,19 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             if (PlayableAnimation != EcsAnimationBuffer.PlayableAnimation)
                 return true;
 
-            return EcsAnimationBuffer.PlayableAnimation.Priority > PlayableAnimation.Priority;
+            return EcsAnimationBuffer.PlayableAnimation?.Priority > PlayableAnimation?.Priority;
         }
 
         internal void Play()
         {
             var animation = EcsAnimationBuffer.PlayableAnimation;
 
+            // Debug.Log(animation.LayerSettings.Index);
+
             if (PlayableAnimation == animation)
                 _unityAnimator.Play(animation.Hash, -1, 0f);
             else
-                _unityAnimator.CrossFade(animation.Hash, animation.TransitionDuration);
+                _unityAnimator.CrossFade(animation.Hash, animation.TransitionDuration, animation.LayerSettings.Index);
 
             ApplyLayerSettings(animation);
             PlayableAnimation = animation;

@@ -15,7 +15,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
         {
             if (InitialAnimation != null)
                 throw new InvalidOperationException();
-
+            
             InitialAnimation = animation;
         }
 

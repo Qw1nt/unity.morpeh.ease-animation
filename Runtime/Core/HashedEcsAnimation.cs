@@ -1,7 +1,12 @@
 using System;
+using Unity.IL2CPP.CompilerServices;
+using UnityEngine;
 
 namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 {
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
     public class HashedEcsAnimation
     {
         public HashedEcsAnimation(int animationHash, EcsAnimation animation)
@@ -15,7 +20,8 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             Type = animation.Type;
         }
 
-        public HashedEcsAnimation(string name, int hash, int priority, float transitionDuration, AnimationType type, float clipDuration, LayerSettings layerSettings)
+        public HashedEcsAnimation(string name, int hash, int priority, float transitionDuration, AnimationType type,
+            float clipDuration, LayerSettings layerSettings)
         {
             Name = name;
             Hash = hash;
@@ -35,11 +41,16 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
         public float TransitionDuration { get; }
 
         public AnimationType Type { get; }
-        
+
         public float ClipDuration { get; }
 
         public LayerSettings LayerSettings { get; }
-        
+
+        public override string ToString()
+        {
+            return $"{Name} | {Priority}";
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -54,35 +65,47 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             return HashCode.Combine(Hash, TransitionDuration);
         }
 
-        public static bool operator ==(HashedEcsAnimation left, HashedEcsAnimation right)
+        /*public static bool operator ==(HashedEcsAnimation left, HashedEcsAnimation right)
         {
-            return left?.Hash == right?.Hash && left?.Type == right?.Type;
+            var leftIsNull = ReferenceEquals(null, left);
+            var rightIsNull = ReferenceEquals(null, right);
+
+            if (leftIsNull == true && rightIsNull == false || leftIsNull == false && rightIsNull == true)
+                return false;
+
+            return left?.Hash == right?.Hash &&
+                   left?.Type == right?.Type &&
+                   left?.LayerSettings != right?.LayerSettings;
         }
 
         public static bool operator !=(HashedEcsAnimation left, HashedEcsAnimation right)
         {
-            return left?.Hash != right?.Hash || left?.Type != right?.Type;
-        }
+            var leftIsNull = ReferenceEquals(null, left);
+            var rightIsNull = ReferenceEquals(null, right);
+
+            if (leftIsNull == true && rightIsNull == true)
+                return false;
+
+            return left?.Hash != right?.Hash ||
+                   left?.Type != right?.Type ||
+                   left?.LayerSettings != right?.LayerSettings;
+        }*/
 
         public static bool operator >(HashedEcsAnimation left, HashedEcsAnimation right)
         {
-            if (left == null)
-                return false;
-            
-            if (right == null)
-                return true;
-            
-            return left.Priority > right.Priority;
+            return right == null;
+
+            return left.Priority > right?.Priority;
         }
 
         public static bool operator <(HashedEcsAnimation left, HashedEcsAnimation right)
         {
             if (left == null)
                 return true;
-            
+
             if (right == null)
                 return false;
-            
+
             return left.Priority < right.Priority;
         }
     }
