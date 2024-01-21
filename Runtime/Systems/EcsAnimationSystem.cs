@@ -24,14 +24,16 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Systems
             {
                 var ecsAnimator = entity.GetAnimator();
 
+                /*
                 if (ecsAnimator.NeedPlayAnimation() == false)
                 {
                     ecsAnimator.AnimationBuffer.Clear();
                     continue;
                 }
+                */
 
                 ecsAnimator.Play();
-                ecsAnimator.AnimationBuffer.Clear();
+                // ecsAnimator.AnimationBuffer.Clear();
             }
         }
 

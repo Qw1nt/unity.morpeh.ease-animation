@@ -9,13 +9,13 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
 
         private HashedEcsAnimation LoopAnimation { get; set; } = null;
 
-        public HashedEcsAnimation PlayableAnimation => LoopAnimation == null ? InitialAnimation : LoopAnimation;
+        public HashedEcsAnimation PlayableAnimation => LoopAnimation ?? InitialAnimation;
 
         public void SetInitial(HashedEcsAnimation animation)
         {
             if (InitialAnimation != null)
                 throw new InvalidOperationException();
-            
+
             InitialAnimation = animation;
         }
 

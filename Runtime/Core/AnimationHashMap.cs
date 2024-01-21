@@ -13,6 +13,15 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             }
         }
 
+        public AnimationHashMap(IReadOnlyList<EcsAnimation> animations, int layerIndex)
+        {
+            foreach (var animation in animations)
+            {
+                if (animation.LayerSettings.Index == layerIndex)
+                    Add(animation.Name, new HashedEcsAnimation(GetAnimationHash(animation), animation));
+            }
+        }
+
         private int GetAnimationHash(EcsAnimation animation)
         {
             if (animation.Type == AnimationType.BlendTree)
@@ -21,7 +30,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             var animationName = animation.AnimationClip != null
                 ? animation.AnimationClip.name
                 : animation.Name;
-            
+
             return Animator.StringToHash(animationName);
         }
     }

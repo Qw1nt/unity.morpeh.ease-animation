@@ -65,48 +65,42 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             return HashCode.Combine(Hash, TransitionDuration);
         }
 
-        /*public static bool operator ==(HashedEcsAnimation left, HashedEcsAnimation right)
-        {
-            var leftIsNull = ReferenceEquals(null, left);
-            var rightIsNull = ReferenceEquals(null, right);
-
-            if (leftIsNull == true && rightIsNull == false || leftIsNull == false && rightIsNull == true)
-                return false;
-
-            return left?.Hash == right?.Hash &&
-                   left?.Type == right?.Type &&
-                   left?.LayerSettings != right?.LayerSettings;
-        }
-
-        public static bool operator !=(HashedEcsAnimation left, HashedEcsAnimation right)
-        {
-            var leftIsNull = ReferenceEquals(null, left);
-            var rightIsNull = ReferenceEquals(null, right);
-
-            if (leftIsNull == true && rightIsNull == true)
-                return false;
-
-            return left?.Hash != right?.Hash ||
-                   left?.Type != right?.Type ||
-                   left?.LayerSettings != right?.LayerSettings;
-        }*/
-
         public static bool operator >(HashedEcsAnimation left, HashedEcsAnimation right)
         {
-            return right == null;
+            if (left == null && right != null)
+                return false;
 
-            return left.Priority > right?.Priority;
+            if (left != null && right == null)
+                return true;
+
+            return left?.Priority > right?.Priority;
         }
 
         public static bool operator <(HashedEcsAnimation left, HashedEcsAnimation right)
         {
-            if (left == null)
+            if (left == null && right != null)
                 return true;
 
-            if (right == null)
+            if (left != null && right == null)
                 return false;
+            
+            return left?.Priority < right?.Priority;
+        }
 
-            return left.Priority < right.Priority;
+        public static bool operator <=(HashedEcsAnimation left, HashedEcsAnimation right)
+        {
+            if (left == null && right == null)
+                return true;
+
+            return left?.Priority <= right?.Priority;
+        }
+
+        public static bool operator >=(HashedEcsAnimation left, HashedEcsAnimation right)
+        {
+            if (left == null && right == null)
+                return true;
+
+            return left?.Priority >= right?.Priority;
         }
     }
 }

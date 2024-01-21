@@ -12,14 +12,19 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Extensions
     {
         public static void SetInitialAnimation(this EcsAnimator animator)
         {
-            var animation = animator.GetAnimation(animator.Data.InitialAnimationName);
-            animator.AnimationBuffer.SetInitial(animation);
+            animator.SetAnimation(animator.Data.InitialAnimationName);
         }
 
-        public static void SetAnimation(this Entity entity, string key)
+        public static void SetAnimation(this Entity entity, string key, int layer = 0)
         {
             var animator = entity.GetAnimator();
-            animator.SetAnimation(key);
+            animator.SetAnimation(key, layer);
+        }       
+        
+        public static void SetLockedAnimation(this Entity entity, string key, int layer = 0)
+        {
+            var animator = entity.GetAnimator();
+            animator.SetLockedAnimation(key, layer);
         }
 
         public static EcsAnimator GetAnimator(this Entity entity)
