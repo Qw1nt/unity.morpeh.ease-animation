@@ -49,7 +49,7 @@ namespace Qw1nt.Morpeh.EaseAnimation.Runtime.Core
             return _slices[layerIndex].GetHashedAnimation(animationName);
         }        
         
-        internal EcsAnimator SetAnimation(string animationName, int index = 0)
+        public EcsAnimator SetAnimation(string animationName, int index = 0)
         {
             _slices[index].TrySetAnimation(animationName);
             return this;
